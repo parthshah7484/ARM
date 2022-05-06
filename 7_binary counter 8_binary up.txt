@@ -1,0 +1,46 @@
+(7) BINARY COUNTER(MBED SIMULATOR)
+#include &quot;mbed.h&quot;
+DigitalOut led1(LED1);
+DigitalOut led2(LED2);
+DigitalOut led3(LED3);
+Ticker t1;
+Timeout t2;
+InterruptIn btn(BUTTON1);
+void blink_led1() {
+printf(&quot;Ticker fired\n&quot;);
+led1 = !led1;
+}
+void toggle_led2() {
+printf(&quot;BUTTON1 fall invoked\n&quot;);
+led2 = !led2;
+}
+void turn_led3_on() {
+printf(&quot;Timeout fired\n&quot;);
+led3 = 1;
+}
+int main() {
+printf(&quot;Hello world!\n&quot;);
+printf(&quot;LED1 will blink every second, LED3 will toggle after 2.5 seconds, LED2 can be toggled
+through
+BUTTON1.\n&quot;);
+printf(&quot;-----------------------------------\n\n&quot;);
+t1.attach(callback(&amp;blink_led1), 1.0f);
+t2.attach(callback(&amp;turn_led3_on), 2.5f);
+btn.fall(callback(&amp;toggle_led2));
+wait_ms(osWaitForever);
+}
+
+(8) BINARY UP COUNTER USING LED(MBED SIMULATOR)
+#include &quot;mbed.h&quot;
+BusOut LEDS(p5,p6,p7,p8,p9,p10,p11,p12);
+int main()
+{
+int CNT = 0; // CNT = 0
+while(1) // Endless loop
+{
+LEDS = CNT; // Turn ON LED
+wait(3.0); // Wait 1 second
+CNT++; // Incfement CNT
+if(CNT &gt; 255)CNT = 0; // CNT back to 0
+}
+} 
